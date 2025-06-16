@@ -1,4 +1,4 @@
-package xyz.malefic.multipage
+package xyz.malefic.gupta
 
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET

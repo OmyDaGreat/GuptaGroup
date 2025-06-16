@@ -15,7 +15,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "multipage"
+rootProject.name = "gupta"
 
 include(":site")
 include("server")

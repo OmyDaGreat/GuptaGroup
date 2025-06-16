@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kobweb.application)
 }
 
-group = "xyz.malefic.multipage"
+group = "xyz.malefic.gupta"
 version = "1.0-SNAPSHOT"
 
 kobweb {
@@ -18,7 +18,7 @@ kobweb {
 }
 
 kotlin {
-    configAsKobwebApplication("multipage")
+    configAsKobwebApplication("gupta")
 
     sourceSets {
         jsMain.dependencies {

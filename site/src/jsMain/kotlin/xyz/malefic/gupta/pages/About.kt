@@ -1,4 +1,4 @@
-package xyz.malefic.multipage.pages
+package xyz.malefic.gupta.pages
 
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -16,11 +16,9 @@ import org.jetbrains.compose.web.dom.Text
 fun AboutPage() {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly) {
-            Text("THIS TEMPLATE WAS CREATED BY MALEFIC")
+            Text("THIS SITE WAS CREATED BY MALEFIC")
             Spacer()
-            Text("YOU SHOULD PROBABLY REPLACE THIS PAGE")
-            Spacer()
-            Text("JUST MAYBE")
+            Text("THANKS FOR VISITING")
         }
     }
 }

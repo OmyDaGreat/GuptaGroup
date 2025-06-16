@@ -5,10 +5,10 @@ server:
   files:
     dev:
       contentRoot: "build/processedResources/js/main/public"
-      script: "build/kotlin-webpack/js/developmentExecutable/multipage.js"
-      api: "build/libs/multipage.jar"
+      script: "build/kotlin-webpack/js/developmentExecutable/gupta.js"
+      api: "build/libs/gupta.jar"
     prod:
-      script: "build/kotlin-webpack/js/productionExecutable/multipage.js"
+      script: "build/kotlin-webpack/js/productionExecutable/gupta.js"
       siteRoot: ".kobweb/site"
 
   port: 8080
