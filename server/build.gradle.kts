@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.http4k:http4k-bom:6.14.0.0"))
+    implementation(platform("org.http4k:http4k-bom:6.15.0.1"))
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.http4k)
     implementation(libs.kermit)
