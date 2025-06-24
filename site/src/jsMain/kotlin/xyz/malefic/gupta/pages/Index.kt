@@ -81,6 +81,7 @@ fun Header() {
             NavLink("Properties", "#properties")
             NavLink("About", "#about")
             NavLink("Contact", "#contact")
+            NavLink("Blog", "/blog")
         }
     }
 }
