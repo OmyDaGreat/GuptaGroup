@@ -2,7 +2,7 @@ package xyz.malefic.gupta
 
 class BlogPostBuilder {
     companion object {
-        private var nextId = 1
+        private var nextId = 0
         private val assignedIds = mutableSetOf<String>()
 
         private fun getNextAvailableId(): String {

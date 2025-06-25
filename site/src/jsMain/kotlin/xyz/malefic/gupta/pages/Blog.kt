@@ -18,8 +18,10 @@ import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.toModifier
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
@@ -40,6 +42,8 @@ import xyz.malefic.gupta.styles.ContainerStyle
 import xyz.malefic.gupta.styles.SectionTitleStyle
 
 @Serializable
+@JsonIgnoreUnknownKeys
+@OptIn(ExperimentalSerializationApi::class)
 data class BlogSummary(
     val id: String,
     val title: String,
@@ -52,6 +56,19 @@ data class BlogSummary(
 @Composable
 @Suppress("unused")
 fun BlogHomePage() {
+    Column(
+        BlogPageStyle.toModifier(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Header()
+        BlogSection()
+        Footer()
+    }
+}
+
+@Composable
+fun BlogSection() {
     var posts by remember { mutableStateOf<List<BlogSummary>?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
     var showAll by remember { mutableStateOf(false) }
@@ -69,41 +86,44 @@ fun BlogHomePage() {
         }
     }
 
-    Column(BlogPageStyle.toModifier(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-        Header()
-        Div(ContainerStyle.toAttrs()) {
-            H2(SectionTitleStyle.toAttrs()) { Text("Blog") }
-            when {
-                error != null -> P { Text("Error: $error") }
-                posts == null -> P { Text("Loading...") }
-                posts!!.isEmpty() -> P { Text("No blog posts found.") }
-                else -> {
-                    val featured = posts!!.take(2)
-                    val rest = posts!!.drop(2)
-                    Column(
-                        Modifier.gap(2.cssRem).margin {
-                            bottom(2.cssRem)
-                        },
-                    ) {
-                        val visiblePosts = if (showAll) posts!! else featured
-                        visiblePosts.forEach { post ->
-                            BlogCardSummary(post)
-                        }
-                    }
-                    if (rest.isNotEmpty()) {
-                        Button(
-                            BlogButtonStyle.toAttrs {
-                                onClick { showAll = !showAll }
-                            },
-                        ) {
-                            Text(if (showAll) "Hide more posts" else "Show more posts")
-                        }
-                    }
+    Div(ContainerStyle.toAttrs()) {
+        H2(SectionTitleStyle.toAttrs()) { Text("Blog") }
+        BlogList(posts, error, showAll, onToggleShowAll = { showAll = !showAll })
+    }
+}
+
+@Composable
+fun BlogList(
+    posts: List<BlogSummary>?,
+    error: String?,
+    showAll: Boolean,
+    onToggleShowAll: () -> Unit,
+) {
+    when {
+        error != null -> P { Text("Error: $error") }
+        posts == null -> P { Text("Loading...") }
+        posts.isEmpty() -> P { Text("No blog posts found.") }
+        else -> {
+            val featured = posts.take(2)
+            val rest = posts.drop(2)
+            Column(
+                Modifier.gap(2.cssRem).margin { bottom(2.cssRem) },
+            ) {
+                val visiblePosts = if (showAll) posts else featured
+                visiblePosts.forEach { post ->
+                    BlogCardSummary(post)
+                }
+            }
+            if (rest.isNotEmpty()) {
+                Button(
+                    BlogButtonStyle.toAttrs {
+                        onClick { onToggleShowAll() }
+                    },
+                ) {
+                    Text(if (showAll) "Hide more posts" else "Show more posts")
                 }
             }
         }
-
-        Footer()
     }
 }
 

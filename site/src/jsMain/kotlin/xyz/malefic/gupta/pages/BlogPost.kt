@@ -15,8 +15,10 @@ import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.silk.style.toAttrs
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.Img
@@ -30,6 +32,8 @@ import xyz.malefic.gupta.styles.SectionStyle
 import xyz.malefic.gupta.styles.SectionTitleStyle
 
 @Serializable
+@JsonIgnoreUnknownKeys
+@OptIn(ExperimentalSerializationApi::class)
 data class BlogPost(
     val id: String,
     val title: String,
