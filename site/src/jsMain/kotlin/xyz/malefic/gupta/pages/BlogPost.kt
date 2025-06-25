@@ -23,9 +23,9 @@ import org.jetbrains.compose.web.dom.Img
 import org.jetbrains.compose.web.dom.P
 import org.jetbrains.compose.web.dom.Section
 import org.jetbrains.compose.web.dom.Text
+import xyz.malefic.gupta.styles.BlogCardAddressStyle
+import xyz.malefic.gupta.styles.BlogCardSummaryStyle
 import xyz.malefic.gupta.styles.ContainerStyle
-import xyz.malefic.gupta.styles.PropertyAddressStyle
-import xyz.malefic.gupta.styles.PropertyDetailStyle
 import xyz.malefic.gupta.styles.SectionStyle
 import xyz.malefic.gupta.styles.SectionTitleStyle
 
@@ -69,8 +69,8 @@ fun BlogPostPage(ctx: PageContext) {
                     else -> {
                         Img(src = post!!.image, attrs = { style { property("width", "100%") } })
                         H2(SectionTitleStyle.toAttrs()) { Text(post!!.title) }
-                        P(PropertyAddressStyle.toAttrs()) { Text(post!!.date) }
-                        P(PropertyDetailStyle.toAttrs()) { Text(post!!.text) }
+                        P(BlogCardAddressStyle.toAttrs()) { Text(post!!.date) }
+                        P(BlogCardSummaryStyle.toAttrs()) { Text(post!!.text) }
                     }
                 }
             }

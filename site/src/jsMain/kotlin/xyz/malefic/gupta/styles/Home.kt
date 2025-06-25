@@ -49,6 +49,7 @@ import org.jetbrains.compose.web.css.LineStyle.Companion.None
 import org.jetbrains.compose.web.css.LineStyle.Companion.Solid
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.lineHeight
+import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.rgba
 import org.jetbrains.compose.web.css.s
@@ -171,7 +172,7 @@ val ContainerStyle =
     CssStyle {
         base {
             Modifier
-                .maxWidth(1200.px)
+                .fillMaxWidth(70.percent)
                 .margin(left = 0.px, right = 0.px)
         }
     }
@@ -304,6 +305,7 @@ val FooterStyle =
                 .flexDirection(FlexDirection.Column)
                 .alignItems(AlignItems.Center)
                 .justifyContent(JustifyContent.Center)
+                .margin { top(2.cssRem) }
         }
     }
 

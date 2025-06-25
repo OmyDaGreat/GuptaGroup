@@ -6,11 +6,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
-import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.gap
+import com.varabyte.kobweb.compose.ui.modifiers.margin
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.style.toAttrs
@@ -20,22 +21,22 @@ import kotlinx.coroutines.await
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.web.css.cssRem
-import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.H3
 import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Section
 import org.jetbrains.compose.web.dom.Text
+import xyz.malefic.gupta.components.ThemedLink
 import xyz.malefic.gupta.styles.BlogButtonStyle
+import xyz.malefic.gupta.styles.BlogCardAddressStyle
+import xyz.malefic.gupta.styles.BlogCardContentStyle
+import xyz.malefic.gupta.styles.BlogCardOverlayStyle
 import xyz.malefic.gupta.styles.BlogCardStyle
+import xyz.malefic.gupta.styles.BlogCardSummaryStyle
+import xyz.malefic.gupta.styles.BlogCardTitleStyle
 import xyz.malefic.gupta.styles.BlogPageStyle
 import xyz.malefic.gupta.styles.ContainerStyle
-import xyz.malefic.gupta.styles.PropertyAddressStyle
-import xyz.malefic.gupta.styles.PropertyDetailStyle
-import xyz.malefic.gupta.styles.PropertyPriceStyle
-import xyz.malefic.gupta.styles.SectionStyle
 import xyz.malefic.gupta.styles.SectionTitleStyle
 
 @Serializable
@@ -68,38 +69,40 @@ fun BlogHomePage() {
         }
     }
 
-    Column(BlogPageStyle.toModifier(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(BlogPageStyle.toModifier(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
         Header()
-        Section(SectionStyle.toAttrs()) {
-            Div(ContainerStyle.toAttrs()) {
-                H2(SectionTitleStyle.toAttrs()) { Text("Blog") }
-                P { Text("This site is the blog homepage. All blogs are fetched from blog.gupta.malefic.xyz.") }
-                when {
-                    error != null -> P { Text("Error: $error") }
-                    posts == null -> P { Text("Loading...") }
-                    posts!!.isEmpty() -> P { Text("No blog posts found.") }
-                    else -> {
-                        val featured = posts!!.take(2)
-                        val rest = posts!!.drop(2)
-                        Column(Modifier.gap(2.cssRem)) {
-                            featured.forEach { post ->
-                                BlogCardSummary(post)
-                            }
-                            if (rest.isNotEmpty()) {
-                                Button(BlogButtonStyle.toAttrs { onClick { showAll = !showAll } }) {
-                                    Text(if (showAll) "Hide more posts" else "Show more posts")
-                                }
-                                if (showAll) {
-                                    rest.forEach { post ->
-                                        BlogCardSummary(post)
-                                    }
-                                }
-                            }
+        Div(ContainerStyle.toAttrs()) {
+            H2(SectionTitleStyle.toAttrs()) { Text("Blog") }
+            when {
+                error != null -> P { Text("Error: $error") }
+                posts == null -> P { Text("Loading...") }
+                posts!!.isEmpty() -> P { Text("No blog posts found.") }
+                else -> {
+                    val featured = posts!!.take(2)
+                    val rest = posts!!.drop(2)
+                    Column(
+                        Modifier.gap(2.cssRem).margin {
+                            bottom(2.cssRem)
+                        },
+                    ) {
+                        val visiblePosts = if (showAll) posts!! else featured
+                        visiblePosts.forEach { post ->
+                            BlogCardSummary(post)
+                        }
+                    }
+                    if (rest.isNotEmpty()) {
+                        Button(
+                            BlogButtonStyle.toAttrs {
+                                onClick { showAll = !showAll }
+                            },
+                        ) {
+                            Text(if (showAll) "Hide more posts" else "Show more posts")
                         }
                     }
                 }
             }
         }
+
         Footer()
     }
 }
@@ -107,16 +110,12 @@ fun BlogHomePage() {
 @Composable
 fun BlogCardSummary(post: BlogSummary) {
     Div(BlogCardStyle(post.image).toAttrs()) {
-        H3(PropertyPriceStyle.toAttrs()) { Text(post.title) }
-        P(PropertyAddressStyle.toAttrs()) { Text(post.date) }
-        P(PropertyDetailStyle.toAttrs()) { Text(post.summary) }
-        Row {
-            A(
-                href = "/blog/${post.id}",
-                attrs = {
-                    classes("blog-link")
-                },
-            ) { Text("Read more") }
+        Div(BlogCardOverlayStyle.toAttrs())
+        Div(BlogCardContentStyle.toAttrs()) {
+            H3(BlogCardTitleStyle.toAttrs()) { Text(post.title) }
+            P(BlogCardAddressStyle.toAttrs()) { Text(post.date) }
+            P(BlogCardSummaryStyle.toAttrs()) { Text(post.summary) }
+            ThemedLink("/blog/${post.id}", "Read more", Modifier.gap(0.5.cssRem))
         }
     }
 }

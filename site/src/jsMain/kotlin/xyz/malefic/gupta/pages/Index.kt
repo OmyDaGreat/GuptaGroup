@@ -30,6 +30,9 @@ import org.jetbrains.compose.web.dom.Section
 import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
 import xyz.malefic.gupta.extension.background
+import xyz.malefic.gupta.styles.BlogCardAddressStyle
+import xyz.malefic.gupta.styles.BlogCardSummaryStyle
+import xyz.malefic.gupta.styles.BlogCardTitleStyle
 import xyz.malefic.gupta.styles.CTAButtonStyle
 import xyz.malefic.gupta.styles.ContactIconStyle
 import xyz.malefic.gupta.styles.ContactInfoContainerStyle
@@ -43,12 +46,9 @@ import xyz.malefic.gupta.styles.HeroSubtitleStyle
 import xyz.malefic.gupta.styles.HeroTitleStyle
 import xyz.malefic.gupta.styles.LogoStyle
 import xyz.malefic.gupta.styles.NavLinkStyle
-import xyz.malefic.gupta.styles.PropertyAddressStyle
 import xyz.malefic.gupta.styles.PropertyCardStyle
 import xyz.malefic.gupta.styles.PropertyContentStyle
-import xyz.malefic.gupta.styles.PropertyDetailStyle
 import xyz.malefic.gupta.styles.PropertyImageStyle
-import xyz.malefic.gupta.styles.PropertyPriceStyle
 import xyz.malefic.gupta.styles.SectionStyle
 import xyz.malefic.gupta.styles.SectionTitleStyle
 import org.jetbrains.compose.web.dom.Footer as Foot
@@ -170,8 +170,8 @@ fun PropertyCard(
             )
         }
         Div(PropertyContentStyle.toAttrs()) {
-            H3(PropertyPriceStyle.toAttrs()) { Text(price) }
-            P(PropertyAddressStyle.toAttrs()) { Text(address) }
+            H3(BlogCardTitleStyle.toAttrs()) { Text(price) }
+            P(BlogCardAddressStyle.toAttrs()) { Text(address) }
             Row(horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
                 PropertyDetail("$beds Beds")
                 PropertyDetail("$baths Baths")
@@ -183,7 +183,7 @@ fun PropertyCard(
 
 @Composable
 fun PropertyDetail(text: String) {
-    Span(PropertyDetailStyle.toAttrs()) { Text(text) }
+    Span(BlogCardSummaryStyle.toAttrs()) { Text(text) }
 }
 
 @Composable
