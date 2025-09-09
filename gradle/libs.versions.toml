@@ -3,7 +3,7 @@ jetbrains-compose = "1.8.2"
 kobweb = "0.23.2"
 kotlin = "2.1.21"
 serialization = "1.8.1"
-kermit = "2.0.6"
+kermit = "2.0.8"
 
 [libraries]
 compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "jetbrains-compose" }
