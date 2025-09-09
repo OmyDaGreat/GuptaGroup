@@ -1,0 +1,23 @@
+name: Build and Upload http4k Distributable
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Build distZip
+        run: ./gradlew distZip
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: guptagroup-dist
+          path: build/distributions/*.zip
