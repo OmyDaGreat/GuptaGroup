@@ -1,5 +1,5 @@
 [versions]
-jetbrains-compose = "1.8.2"
+jetbrains-compose = "1.9.0"
 kobweb = "0.23.2"
 kotlin = "2.2.10"
 serialization = "1.9.0"
